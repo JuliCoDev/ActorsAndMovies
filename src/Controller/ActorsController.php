@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Actors;
 use App\Form\ActorsCreateType;
+use App\Form\ActorsEditType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ActorsController extends AbstractController
@@ -48,26 +50,24 @@ class ActorsController extends AbstractController
     }
 
     /**
-     * @Route("/actors/{id}/edit", name="actorsEdit")
+     * @Route("/actors/edit/{id}", name="actorsEdit")
      */
-    public function ActorsEdit(Request $request , $id)
+    public function ActorsEdit(Actors $actors ,Request $request , EntityManagerInterface $em, int $id)
     {
 
-        $actors = new Actors();
-
-        $form = $this->createForm(ActorsCreateType::class , $actors);
-
+        $form = $this->createForm(ActorsEditType::class, $actors);
         $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($actors);
             $em->flush();
+            $this->addFlash('success', 'actors Updated! Inaccuracies squashed!');
             return $this->redirectToRoute('actors');
         }
-        return $this->render('actors/create.html.twig', [
+
+        return $this->render('actors/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+    
 }

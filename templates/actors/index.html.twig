@@ -20,8 +20,9 @@
             <td>{{ actors.id }}</td>
             <td>{{ actors.nombre }}</td>
             <td>{{ actors.tiempoActivo }}</td>
+            <td>{{ actors.edad }}</td>
             <td>{{ actors.estado}}</td>
-            
+            <a href={{'actors/edit/'~actors.id}}>Editar</a>
         </tr>
         </br>
     {% endfor %}

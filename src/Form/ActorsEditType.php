@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Actors;
+use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +18,7 @@ class ActorsEditType extends AbstractType
             ->add('edad')
             ->add('tiempoActivo')
             ->add('estado')
+            ->add('Guardar' , SubmitType::class)
             // ->add('movies')
         ;
     }

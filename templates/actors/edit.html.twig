@@ -3,6 +3,8 @@
 {% block title %}Hello PostsController!{% endblock %}
 
 {% block body %}
-{{form(form)}}
+{{ form_start(form) }}
+    {{ form_row(form.nombre) }}
+{{ form_end(form) }}
 <a href='/'>Regresar</a>
 {% endblock %}
