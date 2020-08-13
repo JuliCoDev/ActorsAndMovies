@@ -10,8 +10,10 @@
 
 <div class="example-wrapper">
 
-
+    <a href="actors/create">Crear un nuevo actor</a>
+    </br>
     Actors List:
+    
     </br>
     {% for actors in actors %}
         <tr {% if loop.index is odd %}class="color"{% endif %}>
@@ -19,6 +21,7 @@
             <td>{{ actors.nombre }}</td>
             <td>{{ actors.tiempoActivo }}</td>
             <td>{{ actors.estado}}</td>
+            
         </tr>
         </br>
     {% endfor %}
