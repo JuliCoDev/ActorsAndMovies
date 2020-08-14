@@ -1,30 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ActorsController!{% endblock %}
+{% block title %}Hello{% endblock %}
 
 {% block body %}
+
+{{parent()}}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+<div class="container">
+    </br>
+        
 
-    <a href="actors/create">Crear un nuevo actor</a>
+        <form class="form-inline">
+            <a class="btn btn-success" href="actors/create">Create a new actor</a>
+            </br>
+            </br>
+            <select class="form-control mr-sm-2" style='margin-left:10px' name="search" type="search" placeholder="Search" aria-label="Search">
+                <option value=NULL></option>                
+                <option value='1'>Active</option>
+                <option value="0">Inactive</option>
+            </select>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </br>
-    Actors List:
-    
     </br>
+
+    <table class="table table-light table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Years active</th>
+                <th>Years old</th>
+                <th>Movies</th>                
+                <th>Actions</th>
+                <th>State</th>
+            </tr>
+        </thead>
     {% for actors in actors %}
+    
+        
         <tr {% if loop.index is odd %}class="color"{% endif %}>
             <td>{{ actors.id }}</td>
             <td>{{ actors.nombre }}</td>
             <td>{{ actors.tiempoActivo }}</td>
             <td>{{ actors.edad }}</td>
-            <td>{{ actors.estado}}</td>
-            <a href={{'actors/edit/'~actors.id}}>Editar</a>
+            <td>
+                {% for movies in actors.getMovies() %}
+                    {{movies.getNombre ~ '.'}}
+                {% endfor %}
+            </td>
+            <td><a class="btn btn-warning" href={{'actors/edit/'~actors.id}}>Edit</a></td>
+            <td><a class="btn btn-primary" href={{(actors.estado == 1) ? 'actors/'~0~'/'~actors.id : 'actors/'~1~'/'~actors.id }}>{{ (actors.estado == 1) ? 'Inactivate' : 'Activate' }}</a></td>
         </tr>
-        </br>
     {% endfor %}
+    </table>
 </div>
 {% endblock %}

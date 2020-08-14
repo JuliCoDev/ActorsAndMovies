@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MoviesController!{% endblock %}
+{% block title %}Hello ActorsController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{{parent()}}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Proyectos/pruebaSymfonyCop/MoviesActors/src/Controller/MoviesController.php'|file_link(0) }}">src/Controller/MoviesController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Proyectos/pruebaSymfonyCop/MoviesActors/templates/movies/index.html.twig'|file_link(0) }}">templates/movies/index.html.twig</a></code></li>
-    </ul>
+<div class="container">
+    </br>
+        <a class="btn btn-success" href="movies/create">Create a new movie</a>
+    </br>
+    </br>
+
+    <table class="table table-light table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Release year</th>
+                <th>Synopsis</th>
+                <th>Actors</th>                
+                <th>Actions</th>
+            </tr>
+        </thead>
+    {% for movies in movies %}
+    
+        
+        <tr>
+            <td>{{ movies.id }}</td>
+            <td>{{ movies.nombre }}</td>
+            <td>{{ movies.anoEstreno }}</td>
+            <td>{{ movies.sinopsis }}</td>
+            <td>
+                {% for actors in movies.getActors() %}
+                    {{actors.getNombre ~ '.'}}
+                {% endfor %}
+            </td>
+            <td><a class="btn btn-warning" href={{'movies/edit/'~movies.id}}>Edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
 </div>
 {% endblock %}
